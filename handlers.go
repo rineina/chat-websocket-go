@@ -58,6 +58,10 @@ func WebsocketHandler(w http.ResponseWriter, r *http.Request)  {
 			return
 		}
 
+		user := Messages{Message: string(message)}
+		DB.Create(&user)
+
+
 		for client := range users {
 			if err = client.Websocket.WriteMessage(messageType, message); err != nil {
 				log.Println("Cloud not send Message to ", client.ClientIP, err.Error())
